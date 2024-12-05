@@ -21,5 +21,12 @@ test('new users can register', function () {
     ]);
 
     assertAuthenticated();
+
+    $user = auth()->user();
+
+    $this->assertDatabaseHas('wallets', [
+        'user_id' => $user->getKey(),
+    ]);
+
     $response->assertRedirect(route('dashboard', absolute: false));
 });
