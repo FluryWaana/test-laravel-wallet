@@ -6,6 +6,7 @@
 
 - PHP 8.2+
 - Composer
+- Extension PHP Intl
 
 (i) No need database, just use sqlite.
 
@@ -16,7 +17,15 @@ composer install
 ```
 
 ```bash
+cp .env.example .env
+```
+
+```bash
 php artisan key:generate
+```
+
+```bash
+touch database/database.sqlite
 ```
 
 ```bash
@@ -138,3 +147,5 @@ In particular, when a user has several recurring transfers to be executed on the
 Example: at 2:00 AM my wallet is empty (0€), a debit (50€) is scheduled and an automatic transfer of 75€ from another user is also scheduled to be credited to the account.
 
 How would you ensure that as many transactions as possible are successful?
+
+Mettre en place un order dans la requête qui récupère la liste des transactions récurentes
