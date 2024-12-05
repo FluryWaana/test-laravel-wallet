@@ -9,6 +9,7 @@ use App\Exceptions\InsufficientBalance;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Models\WalletTransfer;
+use App\Notifications\BalanceLowNotification;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -46,6 +47,10 @@ readonly class PerformWalletTransaction
             $wallet->increment('balance', $amount);
         } else {
             $wallet->decrement('balance', $amount);
+
+            if ($wallet->balance < 1000) {
+                $wallet->user->notify(new BalanceLowNotification);
+            }
         }
     }
 
